@@ -9,6 +9,7 @@
     <title>Whitespace</title>
     <style>
         body {
+            position: relative;
             margin: 0;
             font-family: Cal Sans;
             overflow: hidden;
@@ -16,6 +17,7 @@
             overflow-x: hidden;
         }
         #toolbar-container {
+            position: absolute;
             width: 100vw;
             height: 100vh;
             display: flex;
@@ -28,6 +30,7 @@
             margin: 20px;
             padding: 30px;
             border-radius: 25px;
+            transition: transform .2s;
             transform: translateY(320px);
         }
         #toolbar label {
@@ -71,6 +74,39 @@
             background-color: #535353;
             cursor: pointer;
         }
+        #mouse-space-container {
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+        }
+        #mouse-space {
+            color: #6e6e6e;
+            background-color: #ffffff1f;
+            mix-blend-mode: difference;
+            margin: 20px;
+            padding: 30px;
+            border-radius: 25px;
+            transition: transform .2s;
+            pointer-events: all;
+            box-shadow: 0px 2px 5px #7f7f7f;
+            width: 200px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            transition: opacity 0.3s;
+            opacity: 1;
+            cursor: default;
+        }
+        #mouse-space:hover {
+            opacity: 0;
+            cursor: none;
+        }
     </style>
 </head>
 <body>
@@ -78,13 +114,11 @@
         <div id="toolbar">
             <label for="gamma-range">Brightness</label>
             <input type="range" min="0" max="255" value="127" class="slider" id="gamma-range">
-
-<!-- <div class="slidecontainer">
-    <p>Default range slider:</p>
-    <input type="range" min="1" max="100" value="50">
-    
-    <p>Custom range slider:</p> -->
-  </div>
+        </div>
+    </div>
+    <div id="mouse-space-container">
+        <div id="mouse-space">
+            Mouse Area
         </div>
     </div>
     <script>
@@ -96,7 +130,7 @@
             top: 0, // Scroll to 500 pixels from the top
             behavior: 'smooth' // Smooth scrolling
         });
-        document.body.style.backgroundColor = "#7F7F7F";
+        document.body.style.backgroundColor = "#FFFFFF";
         document.getElementById("gamma-range").addEventListener('input', function() {
             sliderValue = parseInt(document.getElementById("gamma-range").value);
             rgbValue = sliderValue.toString(16);
@@ -108,7 +142,13 @@
         document.addEventListener("mousemove", function(event) {
             const x = event.clientX; // Get the X coordinate
             const y = event.clientY; // Get the Y coordinate
-            
+            if (y >= (window.innerHeight-document.getElementById("toolbar").offsetHeight)-60) {
+                console.log("ajsd")
+                document.getElementById("toolbar").style.transform = "translateY(0px)";
+            } else {
+                console.log("böe")
+                document.getElementById("toolbar").style.transform = "translateY(320px)";
+            }
         });
     </script>
 </body>
