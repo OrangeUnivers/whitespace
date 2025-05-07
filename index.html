@@ -186,8 +186,9 @@
         });
     </script>
     <script>
+        const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
         const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || navigator.userAgentData?.mobile;
-        if (isMobile) {
+        if (isMobile||isStandalone) {
             document.getElementById("mouse-space").style.visibility = "hidden";
         } else {
             document.getElementById("mouse-space").style.visibility = "visible";
