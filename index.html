@@ -3,9 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cal+Sans&display=swap" rel="stylesheet">
     <title>Whitespace</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Cal Sans;
+            overflow: hidden;
+            overflow-y: hidden;
+            overflow-x: hidden;
+        }
+        #toolbar-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: end;
+        }
+        #toolbar {
+            background-color: #ffffff1f;
+            mix-blend-mode: difference;
+            margin: 20px;
+            padding: 30px;
+            border-radius: 25px;
+            transform: translateY(320px);
+        }
+        #toolbar label {
+            color: rgb(255, 255, 255);
+            font-size: 20px;
+            letter-spacing: 1px;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        .slider {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: #a2a2a2;
+            outline: none;
+            opacity: 1;
+            -webkit-transition: .2s;
+            transition: background-color .2s;
+            -webkit-appearance: none;
+        }
+
+        .slider:hover {
+            background-color: #848484;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background-color: #535353;
+            cursor: pointer;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background-color: #535353;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
+    <div id="toolbar-container">
+        <div id="toolbar">
+            <label for="gamma-range">Brightness</label>
+            <input type="range" min="0" max="255" value="127" class="slider" id="gamma-range">
+
+<!-- <div class="slidecontainer">
+    <p>Default range slider:</p>
+    <input type="range" min="1" max="100" value="50">
     
+    <p>Custom range slider:</p> -->
+  </div>
+        </div>
+    </div>
+    <script>
+        // function getRandomInt(max) {
+        //     return Math.floor(Math.random() * max);
+        // }
+        // document.body.style.backgroundColor = "#7F7F7F";
+        window.scrollTo({
+            top: 0, // Scroll to 500 pixels from the top
+            behavior: 'smooth' // Smooth scrolling
+        });
+        document.body.style.backgroundColor = "#FFFFFF";
+        document.getElementById("gamma-range").addEventListener('input', function() {
+            sliderValue = parseInt(document.getElementById("gamma-range").value);
+            rgbValue = sliderValue.toString(16);
+            if (rgbValue.length === 1) {
+                rgbValue = "0" + rgbValue;
+            }
+            document.body.style.backgroundColor = "#" + rgbValue.repeat(3);
+        });
+        document.addEventListener("mousemove", function(event) {
+            const x = event.clientX; // Get the X coordinate
+            const y = event.clientY; // Get the Y coordinate
+            
+        });
+    </script>
 </body>
 </html>
