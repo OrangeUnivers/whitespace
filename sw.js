@@ -12,7 +12,8 @@ self.addEventListener('install', (event) => {
       return cache.addAll([
         'index.html',
         '/icons/ws/icon-small.png',
-        '/icons/ws/icon-large.png'
+        '/icons/ws/icon-large.png',
+        'calsans.ttf'
       ]);
     })
   );

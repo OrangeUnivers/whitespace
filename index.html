@@ -8,11 +8,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Cal+Sans&display=swap" rel="stylesheet">
     <link rel="manifest" href="manifest.json">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Whitespace">
     <link rel="apple-touch-icon" href="/icons/ws/icon-small.png">
     <title>Whitespace</title>
     <style>
+        @font-face {
+            font-family: Cal Sans;
+            src: url(calsans.ttf);
+        }
         body {
             position: relative;
             margin: 0;
@@ -180,6 +184,14 @@
         document.addEventListener("mousemove", function(event) {
             mouseEvent(event);
         });
+    </script>
+    <script>
+        const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || navigator.userAgentData?.mobile;
+        if (isMobile) {
+            document.getElementById("mouse-space").style.visibility = "hidden";
+        } else {
+            document.getElementById("mouse-space").style.visibility = "visible";
+        }
     </script>
 </body>
 </html>
