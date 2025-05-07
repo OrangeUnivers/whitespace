@@ -6,6 +6,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cal+Sans&display=swap" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Whitespace">
+    <link rel="apple-touch-icon" href="/icons/ws/icon-small.png">
     <title>Whitespace</title>
     <style>
         body {
@@ -122,10 +127,21 @@
         </div>
     </div>
     <script>
-        let savedColor = localStorage.getItem("wb-color");
+        const isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+
+        if (!isLocal && 'serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+                .then(() => console.log('✅ Service Worker registered'))
+                .catch(error => console.error('❌ Service Worker registration failed:', error));
+        } else if (isLocal) {
+            console.log('⚠️ Service Worker not registered (local environment)');
+        }
+    </script>
+    <script>
+        let savedColor = localStorage.getItem("ws-color");
         if (savedColor == "undefined" || savedColor == null || savedColor == undefined) {
             savedColor = "127";
-            localStorage.setItem("wb-color", "127");
+            localStorage.setItem("ws-color", "127");
         }
         startingSliderValue = parseInt(savedColor);
         firstRgbValue = startingSliderValue.toString(16);
@@ -158,7 +174,7 @@
             if (rgbValue.length === 1) {
                 rgbValue = "0" + rgbValue;
             }
-            localStorage.setItem("wb-color", sliderValue.toString());
+            localStorage.setItem("ws-color", sliderValue.toString());
             document.body.style.backgroundColor = "#" + rgbValue.repeat(3);
         });
         document.addEventListener("mousemove", function(event) {
