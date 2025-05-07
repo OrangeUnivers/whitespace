@@ -31,7 +31,7 @@
             padding: 30px;
             border-radius: 25px;
             transition: transform .2s;
-            transform: translateY(320px);
+            transform: translateY();
         }
         #toolbar label {
             color: rgb(255, 255, 255);
@@ -122,6 +122,28 @@
         </div>
     </div>
     <script>
+        let savedColor = localStorage.getItem("wb-color");
+        if (savedColor == "undefined" || savedColor == null || savedColor == undefined) {
+            savedColor = "127";
+            localStorage.setItem("wb-color", "127");
+        }
+        startingSliderValue = parseInt(savedColor);
+        firstRgbValue = startingSliderValue.toString(16);
+        if (firstRgbValue.length === 1) {
+            firstRgbValue = "0" + firstRgbValue;
+        }
+        document.body.style.backgroundColor = "#" + firstRgbValue.repeat(3);
+        document.getElementById("gamma-range").value = savedColor
+        
+        function mouseEvent(event) {
+            const x = event.clientX; // Get the X coordinate
+            const y = event.clientY; // Get the Y coordinate
+            if (y >= (window.innerHeight-document.getElementById("toolbar").offsetHeight)-40) {
+                document.getElementById("toolbar").style.transform = "translateY(0px)";
+            } else {
+                document.getElementById("toolbar").style.transform = "translateY(" + (document.getElementById("toolbar").offsetHeight + 22) + "px)";
+            }
+        }
         // function getRandomInt(max) {
         //     return Math.floor(Math.random() * max);
         // }
@@ -130,25 +152,17 @@
             top: 0, // Scroll to 500 pixels from the top
             behavior: 'smooth' // Smooth scrolling
         });
-        document.body.style.backgroundColor = "#7F7F7F";
         document.getElementById("gamma-range").addEventListener('input', function() {
             sliderValue = parseInt(document.getElementById("gamma-range").value);
             rgbValue = sliderValue.toString(16);
             if (rgbValue.length === 1) {
                 rgbValue = "0" + rgbValue;
             }
+            localStorage.setItem("wb-color", sliderValue.toString());
             document.body.style.backgroundColor = "#" + rgbValue.repeat(3);
         });
         document.addEventListener("mousemove", function(event) {
-            const x = event.clientX; // Get the X coordinate
-            const y = event.clientY; // Get the Y coordinate
-            if (y >= (window.innerHeight-document.getElementById("toolbar").offsetHeight)-60) {
-                console.log("ajsd")
-                document.getElementById("toolbar").style.transform = "translateY(0px)";
-            } else {
-                console.log("böe")
-                document.getElementById("toolbar").style.transform = "translateY(320px)";
-            }
+            mouseEvent(event);
         });
     </script>
 </body>
